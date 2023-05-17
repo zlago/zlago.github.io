@@ -1,0 +1,8 @@
+# i sure do hope i wont need this one
+/concept/
+# the usual
+*.lnk
+*.sublime-workspace
+*.sublime-project
+# the
+*.ase
