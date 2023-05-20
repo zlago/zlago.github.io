@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>stub</title>
+	<title>no, i will not say the line</title>
 	<link rel="stylesheet" href="../stylesheet.css">
 	<link rel="icon" type="image/x-icon" href="../favi.png">
 		<!-- for embeds -->
@@ -10,18 +10,109 @@
 		<meta property="image/png" content="https://zlago.github.com/res/yay.png">
 		<!-- embed color (discord) -->
 		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
+		<style type="text/css">
+			.toc {
+				margin: 10;
+				width: 200;
+				padding: 10;
+				background-color: #000000;
+				color: #ffffff;
+			}
+			.screenshot {
+				zoom: 100%;
+				margin-right: 15;
+			}
+			.project {
+				display: inline-grid;
+				grid-template-columns: auto auto;
+				gap: auto;
+			}
+			h2 {
+				text-align: center;
+				/*margin-left: 1em*/
+			}
+		</style>
 </head>
 <body>
 	<header>
 		<iframe class="header" src="../header.html"></iframe>
 	</header>
 	<div class="main">
+		so, ever since like.. the middle of 202<span id="error">0</span>2, i have made.. various things
+		<div class="toc">
+			<span>table of contents</span>
+			<ul style="margin: 0; padding-left: 20">
+				<li><a href="#homebrew">homebrew</a></li>
+				<li><a href="#misc">misc</a></li>
+				<!-- potential categories
+				test ROMs
+				games
+				-->
+			</ul>
+			<!-- https://github.com/zlago#stuff-i-did -->
+		</div>
+
 		<center>
-			<h2>stub</h2>
-			for now use <a href="https://github.com/zlago#stuff-i-did"
-			title="should my readme link here when its done?">this</a> instead<br>
-			<img src="jumpy.gif" alt="" title="hop hop">
-		</center>
+			<h1 id="homebrew">homebrew</h1>
+			games for now obsolete hardware
+		</center><hr>
+
+		<h2>snek-gbc</h2>
+		<div class="project">
+			<img src="snek.png" class="screenshot"
+			title="i dont remember if i died or closed BGB, probably died">
+			<span>
+				Snek! is my first 'released' project. it supports DMG, SGB and CGB.
+				feedback was generally positive. cancelled.
+				<br><a href="https://github.com/zlago/snek-gbc">github</a>
+				<a href="https://zlago.itch.io/snek-gbc">itch.io</a>
+				<a href="https://hh.gbdev.io/game/snek-gbc">homebrew hub</a>
+			</span>
+		</div>
+		
+		<h2>hell-gbc</h2>
+		<div class="project">
+			<img src="hell.png" class="screenshot"
+			title="okay this isnt a screenshot, but the title screen image">
+			<span>
+				i got nerd sniped and participated in the mvm19 game jam.<br>
+				i was actually doing rather well, but things still didnt go as planned
+				<br><a href="https://github.com/zlago/hell-on-earth-gbc">github</a>
+				<a href="https://zlago.itch.io/hell-on-earth">itch.io</a>
+			</span>
+		</div>
+
+		<center>
+			<h1 id="misc">misc</h1>
+			everything else
+		</center><hr>
+		
+		<h2>sgb-speedtest</h2>
+		<span>
+			test ROM for checking the lowest speed an SGB can process packets, down to a cycle, using RAM code.<br>
+			as it turns out, SGB can handle the fastest possible transfer, fortunately i only spent a day making that!
+			<br><a href="https://github.com/zlago/sgb-speedtest">github</a>
+		</span>
+
+		<h2>custom dmg bootrom</h2>
+		<div class="project">
+			<img src="dmg.png" class="screenshot"
+			title="feat. one (1) free byte remaining">
+			<span>
+				this file has high compatiblity with the real dmg bootrom, is ~4 times faster,
+				and is written from scratch using only BGB HLE bootroms as a reference.<br>
+				header checksum is performed, logo is only <u title="approx 1/256 (0.4%) chance for a false positive">
+				checkesummed</u> to determine whether to display the <u title="if the cart has the nintendo logo">
+				bootrom logo</u> or the <u title="if the cart has a custom logo">cart logo</u><br>
+				if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.
+				<br><a href="../res/dmg.bin" download>binary</a>
+			</span>
+		</div>
 	</div>
+	<script>
+		setTimeout(() => {
+			document.getElementById("error").style = "display: none;";
+		}, 1000); // the best way to remove a typo
+	</script>
 </body>
 </html>
