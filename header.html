@@ -2,19 +2,31 @@
 <html>
 <head>
 	<title>header</title>
-	<style type="text/css">
+	<link rel="icon" type="image/x-icon" href="favi.png">
+	<style type="text/css"> /* the stylesheet seems to conflict with the header */
 		a {
 			margin-left: 5px; margin-right: 5px;
-			color: #ff00ff
+			color: #ff00ff;
+		}
+		img {
+			-ms-interpolation-mode: nearest-neighbor;
+			image-rendering: crisp-edges;
+			image-rendering: pixelated;
+		}
+		body {
+			background-color:#000000;
+			color:#ffffff;
 		}
 	</style>
 	<base target="_parent">
 </head>
-<body style="background-color:#000000; color:#ffffff;">
+<body>
 	<div>
-		<a href="/"><img width="30px" src="res/kity.png" title="she doesnt bite" style="float:left; margin-right: 10px"></a>
+		<a href="/"><img height="24px" src="res/kity.png" title="she doesnt bite"
+		style="float:left; margin-right: 10px"></a>
 		<div style="margin-top: -16px">
-			<a href="me/" title="i dont like talking about myself, but ill make an exception for you~">about me</a>
+			<a href="me/"
+			title="i dont like talking about myself, but ill make an exception for you~">about me</a>
 			<a href="sylvie/" title="yknow, the little lesbian cat">my oc</a>
 			<a href="stuff/" title="i am s">my stuff</a>
 			<a href="zlago/" title='"what the fuck is a zlago"'>my username</a>
