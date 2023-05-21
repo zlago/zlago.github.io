@@ -8,4 +8,4 @@ what?
 
 - just about any browser
 
-now stop snooping around
+now stop snooping around.. unless youre looking for a reference for your own site..?

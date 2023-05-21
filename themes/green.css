@@ -1,0 +1,15 @@
+/* because some people want this */
+a {
+	color: #00ff00
+}
+a:hover {
+	color: #7fff7f;
+	text-shadow: 0px 0px 5px #00ff7f;
+}
+body {
+	background-color: #204020;
+}
+div.main {
+	background-color: #005f00;
+	color: #bfffdf;
+}

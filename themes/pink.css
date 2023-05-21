@@ -1,0 +1,15 @@
+/* the true way to experience the site */
+a {
+	color: #ff00ff
+}
+a:hover {
+	color: #ff7fff;
+	text-shadow: 0px 0px 5px #ff00ff;
+}
+body {
+	background-color: #ff00ff;
+}
+div.main {
+	background-color: #600060;
+	color: #ffbfff;
+}

@@ -1,11 +1,4 @@
 /* css style sheet, what else can i say */
-a {
-	color: #ff00ff
-}
-a:hover {
-	color: #ff7fff;
-	text-shadow: 0px 0px 5px #ff00ff;
-}
 img {
 	-ms-interpolation-mode: nearest-neighbor;
 	image-rendering: crisp-edges;
@@ -23,12 +16,9 @@ iframe.header {
 	height: 40;
 }
 body {
-	background-color: #ff00ff;
 	margin: 0;
 }
 div.main {
-	background-color: #600060;
-	color: #ffbfff;
 	margin: 30;
-	padding: 5;
+	padding: 10;
 }
