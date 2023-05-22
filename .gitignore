@@ -6,3 +6,5 @@
 *.sublime-project
 # the
 *.ase
+# commit summary, because sometimes commits get so big that i need a scratchpad to write down what changed, to give the illusion of non messy commits
+/commit.txt

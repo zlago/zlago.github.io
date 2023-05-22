@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<title>no, i will not say the line</title>
 	<link rel="stylesheet" href="../stylesheet.css">
-	<link id="theme" rel="stylesheet" href="../themes/easy-pink.css">
+	<link id="theme" rel="stylesheet" href="../themes/purple.css">
 	<script type="text/javascript" src="../res/theme.js"></script>
 	<link rel="icon" type="image/x-icon" href="../favi.png">
 		<!-- for embeds -->
@@ -12,21 +12,13 @@
 		<!-- embed color (discord) -->
 		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
 		<style type="text/css">
-			.toc {
-				margin: 10;
-				width: 200;
-				padding: 10;
-				background-color: #000000;
-				color: #ffffff;
-			}
 			.screenshot {
 				zoom: 100%;
-				margin-right: 15;
 			}
 			.project {
 				display: inline-grid;
 				grid-template-columns: auto auto;
-				gap: auto;
+				grid-gap: 15px;
 			}
 			h2 {
 				text-align: center;
@@ -34,13 +26,13 @@
 			}
 		</style>
 </head>
-<body>
+<body onload="fixZero()">
 	<header>
 		<iframe class="header" src="../header.html"></iframe>
 	</header>
 	<div class="main">
-		so, ever since like.. the middle of 202<span id="error">0</span>2, i have made.. various things
-		<div class="toc">
+		so, ever since like.. the middle of 202<span id="mistake">0</span>2, i have made.. various things
+		<div class="blackbox">
 			<span>table of contents</span>
 			<ul style="margin: 0; padding-left: 20">
 				<li><a href="#homebrew">homebrew</a></li>
@@ -104,13 +96,24 @@
 			<span>
 				this file has high compatiblity with the real dmg bootrom, is ~4 times faster,
 				and is written from scratch using only BGB HLE bootroms as a reference.<br>
-				header checksum is performed, logo is only <u title="approx 1/256 (0.4%) chance for a false positive">
-				checkesummed</u> to determine whether to display the <u title="if the cart has the nintendo logo">
-				bootrom logo</u> or the <u title="if the cart has a custom logo">cart logo</u><br>
+				header checksum is performed, logo is only <u class="title" title="approx 1/256 (0.4%) chance for a false positive">
+				checkesummed</u> to determine whether to display the <u class="title" title="if the cart has the nintendo logo">
+				bootrom logo</u> or the <u class="title" title="if the cart has a custom logo">cart logo</u><br>
 				if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.
 				<br><a href="../res/dmg.bin" download>binary</a>
 			</span>
 		</div>
+
+		<h2 id="katakis-3d-gbs-rip">katakis 3d GBS rip</h2>
+			<span>
+				katakis 3d is a game boy color game that didnt get
+				released, the binary got uploaded online by a developer,
+				and.. suprisingly, no one gbs-ripped it for a while..<br>
+				..untill i decided to open up bgb and play some
+				katakis 3d, and then decided i want a .gbs of it<br>
+				tagged by zumi <a href="https://zumi.neocities.org/bloge/gbs_tagging" target="_blank">(blog post)</a>
+				<br><a href="https://gbs.joshw.info/k/Katakis%203D%20(Unreleased)(2001)(Similis)[GBC].7z" download>binary</a>
+			</span>
 
 		<h2 id="this-site">this site!</h2>
 		<span>
@@ -119,12 +122,15 @@
 			reasonably test some things, but i do tend to have fun making this
 			<br><br>quite a few things here have a title defined, i.e. they show
 			something if you hover over them, but you already knew that, right :3
+			<br><a href="/" target="_blank">open</a>
 		</span>
 	</div>
 	<script>
-		setTimeout(() => {
-			document.getElementById("error").style = "display: none;";
-		}, 1000); // the best way to remove a typo
+		function fixZero() {
+			setTimeout(() => {
+			document.getElementById("mistake").style = "display: none;";
+			}, 690); // the best way to remove a typo
+		}
 	</script>
 </body>
 </html>

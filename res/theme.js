@@ -25,20 +25,26 @@ function getCookie(cname) {
 	return "";
 }
 
+// set theme and save as cookie
+function setTheme(newtheme) {
+	setCookie("theme", newtheme, 690);
+	// yes, this lets the user load invalid themes
+	document.getElementById("theme").href = "/themes/" + newtheme + ".css"
+}
+
 // get theme query string
 const params = new Proxy(new URLSearchParams(window.location.search), {
 	get: (searchParams, prop) => searchParams.get(prop),
 });
 
-// check if a theme was passed in a query string
-theme = params.theme
-if (theme != null) { // create a cookie if so
-	setCookie("theme", theme, 690)
-} else { // (try to) load from cookie otherwise
+//////////////////////////////////
+
+theme = params.theme // load theme from query string, if any
+if (theme != null) {
+	setTheme(theme)
+} else { // load from cookie (if any) otherwise
 	theme = getCookie("theme")
-}
-// set theme, if any
-if (theme != null && theme != "") {
-	// yes, this lets the user load invalid themes
-	document.getElementById("theme").href = "/themes/" + theme + ".css";
+	if (theme != "") {
+		setTheme(theme)
+	}
 }

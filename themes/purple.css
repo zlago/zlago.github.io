@@ -1,0 +1,15 @@
+/* accessibility never looked this good! */
+a {
+	color: #ee68cd
+}
+a:hover {
+	color: #f391db;
+	text-shadow: 0px 0px 5px #ee68cd;
+}
+body {
+	background-color: #55185b;
+}
+div.main {
+	background-color: #3b183f;
+	color: #c2c2c2;
+}

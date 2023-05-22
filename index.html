@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<title>sylvie site</title>
 	<link rel="stylesheet" href="stylesheet.css">
-	<link id="theme" rel="stylesheet" href="themes/easy-pink.css">
+	<link id="theme" rel="stylesheet" href="themes/purple.css">
 	<script type="text/javascript" src="res/theme.js"></script>
 	<link rel="icon" type="image/x-icon" href="favi.png">
 		<!-- for embeds -->
@@ -11,6 +11,14 @@
 		<meta property="og:description" content="silly website by a silly kitty!">
 		<!-- embed color (discord) -->
 		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
+		<style type="text/css">
+			#themes {
+				font-size: 0.85em
+			}
+			#themes > a {
+				margin: 0px 2px
+			}
+		</style>
 </head>
 <body>
 	<header>
@@ -19,24 +27,41 @@
 	<div class="main">
 		hi im sylvie this is my silly website<br>
 		better dont look at the source cause its probably cursed as all hell<hr>
-		funny accounts i use<br>
-		<a rel="me" href="https://mastodon.gamedev.place/@zlago"
-		title="posts once every starturn">mastodon</a>
-		<a href="https://github.com/zlago" title="source code">github</a>
-		<a href="https://zlago.itch.io/" title="game downloads">itch.io</a>
-		<a href="https://battleofthebits.org/barracks/Profile/zlago/"
-		title="..4 songs?">BotB</a>
-		<a href="https://discord.com/users/755055255426957412"
-		title="hopefully they get competition">deezcord</a>
+		<div class="blackbox">
+			funny accounts i use<br>
+			<a rel="me" href="https://mastodon.gamedev.place/@zlago"
+			title="posts once every starturn">mastodon</a>
+			<a href="https://github.com/zlago" title="source code">github</a>
+			<a href="https://zlago.itch.io/" title="game downloads">itch.io</a>
+			<a href="https://battleofthebits.org/barracks/Profile/zlago/"
+			title="..4 songs?">BotB</a>
+			<a href="https://discord.com/users/755055255426957412"
+			title="hopefully they get competition">deezcord</a>
+		</div>
+		this site uses js and <a onclick="clearCookies()"
+		title="(click to delete)">one cookie</a> for changing and saving themes<br>
+		..and minor use of silly scripts
 		<center><img src="res/yay.png" alt="" style="zoom: 100%" 
-			title="this took an unreasonable amount of time to draw and it still sucks, what a world we live in">
-			<br><span style="font-size: 0.85em">
-				<b>(experimental)</b><br>themes:
-				<a href="?theme=pink">pink (bright!)</a>
-				<a href="?theme=easy-pink">easy-pink (default)</a>
-				<a href="?theme=green">green</a>
+			title="this took an unreasonable amount of time to draw and deli told me its not bad so i cant even call it bad">
+			<br><span id="themes">
+				themes:<br>
+				<u class="title" title="default">
+					<a onclick='setTheme("purple")'>soft-purple</a></u>
+				<a onclick='setTheme("green")'>some-green</a>
+				<a onclick='setTheme("blue")'>deep-blue</a>
+				<br><a onclick='setTheme("pink")'
+				title="the TRUE way to browse this site, youve been warned!!">eyesore-magenta</a>
+				<!-- uncomment this and make hotdog theme on april 1st or something
+					<br><a onclick='setTheme("hotdog")'>hotdog</a>
+				-->
 			</span>
 		</center>
 	</div>
 </body>
+<script type="text/javascript">
+	function clearCookies() { // should be easier to maintain in case i add more
+		setCookie("theme", "", -1);
+		alert("cookies wiped (this is the least dumb feedback i could think of\nyes; the cookie actually got deleted, you can go check)")
+	}
+</script>
 </html>
