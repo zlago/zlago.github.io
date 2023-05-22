@@ -1,4 +1,5 @@
 /* css style sheet, what else can i say */
+@import "themes/purple.css"; /* default theme */
 img {
 	-ms-interpolation-mode: nearest-neighbor;
 	image-rendering: crisp-edges;

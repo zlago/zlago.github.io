@@ -28,7 +28,7 @@ function getCookie(cname) {
 // set theme and save as cookie
 function setTheme(newtheme) {
 	setCookie("theme", newtheme, 690);
-	// yes, this lets the user load invalid themes
+	// now invalid themes dont overwrite the theme!!
 	document.getElementById("theme").href = "/themes/" + newtheme + ".css"
 }
 
