@@ -1,13 +1,13 @@
 /* the true way to experience the site */
 a {
-	color: #ff00ff
+	color: #f0f
 }
 a:hover {
 	color: #ff7fff;
-	text-shadow: 0px 0px 5px #ff00ff;
+	text-shadow: 0px 0px 5px #f0f;
 }
 body {
-	background-color: #ff00ff;
+	background-color: #f0f;
 }
 div.main {
 	background-color: #600060;

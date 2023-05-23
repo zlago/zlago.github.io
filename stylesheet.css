@@ -14,14 +14,18 @@ header {
 iframe.header {
 	border-style: none;
 	width: 100%;
-	height: 40;
+	height: 2.5em;
 }
 body {
 	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 div.main {
+	align-self: center;
 	margin: 30;
 	padding: 10;
+	width: fit-content
 }
 div.blackbox {
 	margin: 10px;

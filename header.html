@@ -7,42 +7,51 @@
 		<!-- for embeds -->
 		<meta property="og:title" content="sylvie's header">
 		<meta property="og:description"
-		content="silly header with silly links to a silly website by a silly kitty!">
+		content="a header!">
 		<!-- embed color (discord) -->
 		<meta content="#ffbfff" data-react-helmet="true" name="theme-color">
 	<style type="text/css"> /* the stylesheet seems to conflict with the header */
+		html {
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			background-color:#000;
+			color:#fff;
+			height: 100%;
+			margin: auto 0.75em;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			white-space: nowrap;
+		}
 		a {
-			margin-left: 5px; margin-right: 5px;
-			color: #ff00ff;
+			margin: auto 0.25em;
+			color: #f0f;
 		}
 		a:hover {
 			color: #ff7fff;
-			text-shadow: 0px 0px 5px #ff00ff;
+			text-shadow: 0px 0px 5px #f0f;
 		}
 		img {
 			-ms-interpolation-mode: nearest-neighbor;
 			image-rendering: crisp-edges;
 			image-rendering: pixelated;
-		}
-		body {
-			background-color:#000000;
-			color:#ffffff;
+			float: left;
+			height: 1.5em;
 		}
 	</style>
 	<base target="_parent">
 </head>
 <body>
 	<div>
-		<a href="index.html"><img height="24px" src="res/kity.png" title="she doesnt bite"
-		style="float:left; margin-right: 10px"></a>
+		<a href="index.html"><img src="res/kity.png" title="she doesnt bite"></a>
 		<!-- i wouldve loved to animate this little thing but its not possible with css, and i dont really know js -->
-		<div style="margin-top: -16px">
-			<a href="me/index.html"
-			title="i dont like talking about myself, but ill make an exception for you~">about me</a>
-			<a href="sylvie/index.html" title="yknow, the little lesbian cat">my oc</a>
-			<a href="stuff/index.html" title="..">my stuff</a>
-			<a href="zlago/index.html" title='"what the fuck is a zlago"'>my username</a>
-		</div>
+		<a href="me/index.html"
+		title="i dont like talking about myself, but ill make an exception for you~">about me</a>
+		<a href="oc/index.html" title="yknow, the little lesbian cat">my oc</a>
+		<a href="stuff/index.html" title="..">my stuff</a>
+		<a href="zlago/index.html" title='"what the fuck is a zlago"'>my username</a>
 	</div>
 </body>
 </html>

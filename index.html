@@ -2,6 +2,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>sylvie site</title>
+	<meta name="viewport" content="width=device-width initial-scale=1">
 	<link rel="stylesheet" href="stylesheet.css">
 	<link rel="stylesheet" href="themes/purple.css">
 	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
@@ -9,7 +10,7 @@
 	<link rel="icon" type="image/x-icon" href="favi.png">
 		<!-- for embeds -->
 		<meta property="og:title" content="sylvie's site">
-		<meta property="og:description" content="silly website by a silly kitty!">
+		<meta property="og:description" content="hello, im sylvie, and this is my website~">
 		<!-- embed color (discord) -->
 		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
 		<style type="text/css">
@@ -50,6 +51,7 @@
 					<a onclick='setTheme("purple")'>soft-purple</a></u>
 				<a onclick='setTheme("green")'>some-green</a>
 				<a onclick='setTheme("blue")'>deep-blue</a>
+				<a onclick='setTheme("void")'>dark-void</a>
 				<br><a onclick='setTheme("pink")'
 				title="the TRUE way to browse this site, youve been warned!!">eyesore-magenta</a>
 				<!-- uncomment this and make hotdog theme on april 1st or something
@@ -62,7 +64,7 @@
 <script type="text/javascript">
 	function clearCookies() { // should be easier to maintain in case i add more
 		setCookie("theme", "", -1);
-		alert("cookies wiped (this is the least dumb feedback i could think of\nyes; the cookie actually got deleted, you can go check)")
+		alert("cookies wiped (this is the least dumb user feedback i could think of)\n(yes; the cookie got deleted*, you can go check)\n(*should expire)")
 	}
 </script>
 </html>
