@@ -3,11 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<title>header</title>
+	<meta name="viewport" content="width=device-width initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favi.png">
 		<!-- for embeds -->
 		<meta property="og:title" content="sylvie's header">
-		<meta property="og:description"
-		content="a header!">
+		<meta property="og:description" content="a header!">
 		<!-- embed color (discord) -->
 		<meta content="#ffbfff" data-react-helmet="true" name="theme-color">
 	<style type="text/css"> /* the stylesheet seems to conflict with the header */
@@ -19,19 +19,20 @@
 			background-color:#000;
 			color:#fff;
 			height: 100%;
-			margin: auto 0.75em;
+			margin: auto 1.125em;
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
 			white-space: nowrap;
+			font-size: 1.5em;
 		}
 		a {
 			margin: auto 0.25em;
-			color: #f0f;
+			color: #fff;
 		}
 		a:hover {
-			color: #ff7fff;
-			text-shadow: 0px 0px 5px #f0f;
+			color: #fff;
+			text-shadow: 0px 0px 5px #777;
 		}
 		img {
 			-ms-interpolation-mode: nearest-neighbor;
@@ -39,6 +40,7 @@
 			image-rendering: pixelated;
 			float: left;
 			height: 1.5em;
+			mix-blend-mode: luminosity;
 		}
 	</style>
 	<base target="_parent">

@@ -3,16 +3,16 @@ and accidentally found out i have a nice
 looking theme on itch i just copied that
 */
 a {
-	color: #ee68cd
+	color: #e6c
 }
 a:hover {
-	color: #f391db;
-	text-shadow: 0px 0px 5px #ee68cd;
+	color: #e9d;
+	text-shadow: 0px 0px 5px #e6c;
 }
 body {
 	background-color: #55185b;
 }
 div.main {
 	background-color: #3b183f;
-	color: #c2c2c2;
+	color: #ccc;
 }
