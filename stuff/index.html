@@ -4,7 +4,6 @@
 	<title>no, i will not say the line</title>
 	<meta name="viewport" content="width=device-width initial-scale=1">
 	<link rel="stylesheet" href="/stylesheet.css">
-	<link rel="stylesheet" href="/themes/purple.css">
 	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
 	<script type="text/javascript" src="/res/theme.js"></script>
 	<link rel="icon" type="image/x-icon" href="/favi.png">
@@ -14,16 +13,22 @@
 		<!-- embed color (discord) -->
 		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
 		<style type="text/css">
-			.screenshot {
-				zoom: 100%;
+			h2 {
+				text-align: center;
 			}
 			.project {
 				display: inline-grid;
 				grid-auto-flow: column;
 				grid-gap: 15px;
 			}
-			h2 {
-				text-align: center;
+			div.screenshot {
+				display: grid;
+				width: min-content;
+				grid-auto-flow: row;
+				gap: 0px;
+			}
+			div.screenshot > img {
+				zoom: 100%;
 			}
 		</style>
 </head>
@@ -53,8 +58,10 @@
 
 		<h2 id="snek-gbc">snek-gbc</h2>
 		<div class="project">
-			<img src="snek.png" class="screenshot"
-			title="i dont remember if i died or closed BGB, probably died">
+			<div class="screenshot">
+				<img src="snek.png">
+				<i class="flavor">i dont remember if i died or closed BGB, probably died</i>
+			</div>
 			<span>
 				Snek! is my first 'released' project. it supports DMG, SGB and CGB.<br>
 				feedback was generally positive.<br>project cancelled.
@@ -66,8 +73,10 @@
 
 		<h2 id="hell-gbc">hell-gbc</h2>
 		<div class="project">
-			<img src="hell.png" class="screenshot"
-			title="okay, this isnt actually a screenshot..">
+			<div class="screenshot">
+				<img src="hell.png">
+				<i class="flavor">okay, this isnt actually a screenshot..</i>
+			</div>
 			<span>
 				i got nerd sniped and participated in the mvm19 game jam.<br>
 				i was actually doing rather well, but things still didnt go as planned<br>
@@ -92,14 +101,20 @@
 
 		<h2 id="custom-dmg-bootrom">custom dmg bootrom</h2>
 		<div class="project">
-			<img src="dmg.png" class="screenshot"
-			title="feat. one (1) free byte remaining">
+			<div class="screenshot">
+				<img src="dmg.png">
+				<i class="flavor">feat. one (1) free byte remaining</i>
+			</div>
 			<span>
 				this file has high compatiblity with the real dmg bootrom, is ~4 times faster,
 				and is written from scratch using only BGB HLE bootroms as a reference.<br>
-				header checksum is performed, logo is only <u class="title" title="approx 1/256 (0.4%) chance for a false positive">
-				checkesummed</u> to determine whether to display the <u class="title" title="if the cart has the nintendo logo">
-				bootrom logo</u> or the <u class="title" title="if the cart has a custom logo">cart logo</u><br>
+				header checksum is performed, logo is only
+				<u id="ref1" class="title" title="8 bit checksum, ie. every 256th logo is detected as the nintendo logo">
+				checkesummed<a href="#note1">(1)</a></u>
+				to determine
+				<u id="ref2" class="title" title="display the on-cart logo if its custom, bootrom logo otherwise">
+				whether to display the bootrom logo or the cart logo
+				<a href="#note2">(2)</a></u><br>
 				if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.
 				<br><a href="/res/dmg.bin" download>binary</a>
 			</span>
@@ -121,9 +136,21 @@
 			using the little bit of html, css and js i already knew, and lots of googling + console.<br>
 			it is a bit of a pain to work on at times, when i cant even
 			reasonably test some things, but i do tend to have fun making this
-			<br><br>quite a few things here have a title defined, i.e. they show
-			something if you hover over them, but you already knew that, right :3
+			<br><br>some things here have a title defined, but due to
+			<u id="ref3" class="title" title="accessibility">
+			a11y<a href="#note3">(3)</a></u>
+			some of them became text and footnotes, some still remains :3
 			<br><a href="/" target="_blank">open</a>
+		</span>
+
+		<hr><span class="footnotes">
+			footnotes
+			<p id="note1"><a href="#ref1">(1)</a>
+			8 bit checksum, ie. every 256th logo is detected as the nintendo logo</p>
+			<p id="note2"><a href="#ref2">(2)</a>
+			display the on-cart logo if its custom, bootrom logo otherwise</p>
+			<p id="note3"><a href="#ref3">(3)</a>
+			accessibility</p>
 		</span>
 	</div>
 	<script>

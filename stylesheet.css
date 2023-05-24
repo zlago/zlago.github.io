@@ -1,10 +1,7 @@
 /* css style sheet, what else can i say */
-@import "themes/purple.css"; /* default theme */
-img {
-	-ms-interpolation-mode: nearest-neighbor;
-	image-rendering: crisp-edges;
-	image-rendering: pixelated;
-	zoom: 400%;
+@import "/themes/purple.css";
+html { /* for #s to mind the header */
+  scroll-padding-top: 2.5em;
 }
 header {
 	position: sticky; /* i know what im doing trust me */
@@ -35,7 +32,24 @@ div.blackbox {
 	color: #fff;
 	width: fit-content;
 }
+img {
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+	zoom: 400%;
+}
 u.title {
     text-decoration-style: dotted;
     text-decoration-thickness: 1px;
+}
+i.flavor {
+	text-align: center;
+	font-size: 0.8em;
+}
+/* for footnotes */
+.footnotes > p {
+	margin: 0px;
+}
+.footnotes > p:target {
+	background-color: #fff2
 }
