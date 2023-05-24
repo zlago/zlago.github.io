@@ -18,13 +18,12 @@
 		body {
 			background-color:#000;
 			color:#fff;
-			height: 100%;
-			margin: auto 1.125em;
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
+			height: calc(100% - 1em);
+			margin: 0.5em;
+			display: inline-grid;
+			grid-auto-flow: column;
 			white-space: nowrap;
-			font-size: 1.5em;
+			font-size: 1em;
 		}
 		a {
 			margin: auto 0.25em;
@@ -33,6 +32,12 @@
 		a:hover {
 			color: #fff;
 			text-shadow: 0px 0px 5px #777;
+		}
+		div.icon { /* hacky */
+			background-color:#000;
+		}
+		div.links {
+			padding: 0.25em 0;
 		}
 		img {
 			-ms-interpolation-mode: nearest-neighbor;
@@ -46,14 +51,16 @@
 	<base target="_parent">
 </head>
 <body>
-	<div>
-		<a href="index.html"><img src="res/kity.png" title="she doesnt bite"></a>
+	<div class="icon">
+		<a href="/"><img src="res/kity.png" title="she doesnt bite"></a>
 		<!-- i wouldve loved to animate this little thing but its not possible with css, and i dont really know js -->
-		<a href="me/index.html"
+	</div>
+	<div class="links">
+		<a href="/me/"
 		title="i dont like talking about myself, but ill make an exception for you~">about me</a>
-		<a href="oc/index.html" title="yknow, the little lesbian cat">my oc</a>
-		<a href="stuff/index.html" title="..">my stuff</a>
-		<a href="zlago/index.html" title='"what the fuck is a zlago"'>my username</a>
+		<a href="/oc/" title="yknow, the little lesbian cat">my oc</a>
+		<a href="/stuff/" title="..">my stuff</a>
+		<a href="/zlago/" title='"what the fuck is a zlago"'>my username</a>
 	</div>
 </body>
 </html>

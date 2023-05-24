@@ -3,11 +3,11 @@
 	<meta charset="utf-8">
 	<title>no, i will not say the line</title>
 	<meta name="viewport" content="width=device-width initial-scale=1">
-	<link rel="stylesheet" href="../stylesheet.css">
-	<link rel="stylesheet" href="../themes/purple.css">
+	<link rel="stylesheet" href="/stylesheet.css">
+	<link rel="stylesheet" href="/themes/purple.css">
 	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
-	<script type="text/javascript" src="../res/theme.js"></script>
-	<link rel="icon" type="image/x-icon" href="../favi.png">
+	<script type="text/javascript" src="/res/theme.js"></script>
+	<link rel="icon" type="image/x-icon" href="/favi.png">
 		<!-- for embeds -->
 		<meta property="og:title" content="sylvie's stuff">
 		<meta property="og:description" content="things i did!">
@@ -19,7 +19,7 @@
 			}
 			.project {
 				display: inline-grid;
-				grid-template-columns: auto auto;
+				grid-auto-flow: column;
 				grid-gap: 15px;
 			}
 			h2 {
@@ -29,7 +29,7 @@
 </head>
 <body onload="fixZero()">
 	<header>
-		<iframe class="header" src="../header.html"></iframe>
+		<iframe class="header" src="/header.html"></iframe>
 	</header>
 	<div class="main">
 		so, ever since like.. the middle of 202<span id="mistake">0</span>2, i have made.. various things
@@ -101,7 +101,7 @@
 				checkesummed</u> to determine whether to display the <u class="title" title="if the cart has the nintendo logo">
 				bootrom logo</u> or the <u class="title" title="if the cart has a custom logo">cart logo</u><br>
 				if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.
-				<br><a href="../res/dmg.bin" download>binary</a>
+				<br><a href="/res/dmg.bin" download>binary</a>
 			</span>
 		</div>
 
