@@ -3,35 +3,33 @@
 	<meta charset="utf-8">
 	<title>not found!</title>
 	<meta name="viewport" content="width=device-width initial-scale=1">
+	<link rel="stylesheet" href="/stylesheet.css">
+	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
+	<script type="text/javascript" src="/res/theme.js"></script>
 	<link rel="icon" type="image/x-icon" href="/favi.png">
 		<!-- for embeds -->
 		<meta property="og:title" content="404!">
 		<meta property="og:description" content="why did you link to this?">
-	<style type="text/css"> /* cant test if the stylesheet works ok with this */
-		body {
-			background-color: #600060;
-			color: #ffbfff;
-		}
-		a {
-			color: #f0f;
-		}
-		img {
-			-ms-interpolation-mode: nearest-neighbor;
-			image-rendering: crisp-edges;
-			image-rendering: pixelated;
-			zoom: 400%;
-		}
-		i {
-			font-size: 0.8em
+		<!-- embed color (discord) -->
+		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
+	<style type="text/css">
+		h1 {
+			margin: 0;
+			text-align: center;
 		}
 	</style>
 </head>
 <body>
-	<center>
-		<h1>404!</h1>
-		<p>check spelling or something</p>
-		<a href="/"><img src="/res/404.gif" alt="(go to main page)">
-		<br><i>she will take you (to) home(page) safely (trust me)</i></a>
-	</center>
+	<header>
+		<iframe class="header" src="/header.html"></iframe>
+	</header>
+	<div class="main">
+		<center>
+			<h1>404!</h1>
+			<span>couldnt find what youre looking for</span><br>
+			<a href="/"><img src="/res/404.gif" alt="(go to main page)">
+			<br><i>she will take you (to) home(page) safely (trust me)</i></a>
+		</center>
+	</div>
 </body>
 </html>

@@ -26,10 +26,12 @@ function getCookie(cname) {
 }
 
 // set theme and save as cookie
-function setTheme(newtheme) {
-	setCookie("theme", newtheme, 690);
+function setTheme(newtheme, savetheme) {
+	if (savetheme != false) {
+		setCookie("theme", newtheme, 690);
+	}
 	// now invalid themes dont overwrite the theme!!
-	document.getElementById("theme").href = "/themes/" + newtheme + ".css"
+	document.getElementById("theme").href = "/themes/" + newtheme + ".css";
 }
 
 // get theme query string
@@ -41,7 +43,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 theme = params.theme // load theme from query string, if any
 if (theme != null) {
-	setTheme(theme)
+	setTheme(theme, false)
 } else { // load from cookie (if any) otherwise
 	theme = getCookie("theme")
 	if (theme != "") {
