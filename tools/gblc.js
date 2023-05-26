@@ -23,13 +23,14 @@ function drop(e) {
 function deserialiseData() {
 	const selectedFile = this.files[0]; // fetch the first uploaded file
 	if (selectedFile.size == 48) {
+		let filename = stripExtension(selectedFile.name)
 		const reader = new FileReader();
 		reader.onload = (e) => {
 			// put the contents of the file in the fileData array buffer
 			const buffer = new Uint8Array(e.target.result);
 			const inputArray = Uint8Array.from(buffer);
 			let outputArray = convertData(inputArray);
-			serialiseData(outputArray)
+			serialiseData(outputArray, filename + ".gbl");
 		};
 		reader.readAsArrayBuffer(selectedFile);
 	} else {
@@ -51,11 +52,20 @@ function convertData(inArray) {
 	return outArray;
 }
 
-function serialiseData(inArray) {
+function serialiseData(inArray, outfile) {
 	// totally not stolen from stackoverflow
 	var blob = new Blob([inArray]);
 	var link = document.createElement('a');
 	link.href = window.URL.createObjectURL(blob);
-	link.download = "out.gbl";
+	link.download = outfile;
 	link.click();
+}
+
+function stripExtension(inString) {
+	let splitArray = inString.split(".");
+	let outString = splitArray[0];
+	for (let i = 1; i < splitArray.length - 1; i++) {
+		outString += "." + splitArray[i];
+	}
+	return outString;
 }

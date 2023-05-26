@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -34,18 +35,19 @@
 				background-color: #fff2
 			}
 		</style>
+		<base target="_blank">
 </head>
 <body onload="fixZero()">
 	<header>
-		<iframe class="header" src="/header.html"></iframe>
+		<iframe title="navigation bar" class="header" src="/header.html"></iframe>
 	</header>
 	<div class="main">
 		so, ever since like.. the middle of 202<span id="mistake">0</span>2, i have made.. various things
 		<div class="blackbox">
 			<span>table of contents</span>
 			<ul>
-				<li><a href="#homebrew">homebrew</a></li>
-				<li><a href="#misc">misc</a></li>
+				<li><a target="_self" href="#homebrew">homebrew</a></li>
+				<li><a target="_self" href="#misc">misc</a></li>
 				<!-- potential categories
 				test ROMs
 				games
@@ -119,14 +121,14 @@
 				whether to display the bootrom logo or the cart logo
 				<a href="#note2">(2)</a></u><br>
 				<span id="logo">if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.<span>
-				<br><a href="/res/dmg.bin" download>binary</a>
+				<br><a href="/res/dmg.bin" download>download</a>
 			</span>
 		</div>
 
 		<h2 id="gblc">gblc</h2>
 		<span>
 			converts 1bpp into game boy logo format, not much else i can say 
-			<br><a href="/tools/gblc.html">main page</a>
+			<br><a href="/tools/gblc.html">page</a>
 		</span>
 
 		<h2 id="katakis-3d-gbs-rip">katakis 3d GBS rip</h2>
@@ -137,7 +139,7 @@
 				..untill i decided to open up bgb and play some
 				katakis 3d, and then decided i want a .gbs of it<br>
 				tagged by zumi <a href="https://zumi.neocities.org/bloge/gbs_tagging" target="_blank">(blog post)</a>
-				<br><a href="https://gbs.joshw.info/k/Katakis%203D%20(Unreleased)(2001)(Similis)[GBC].7z" download>binary</a>
+				<br><a href="https://gbs.joshw.info/k/Katakis%203D%20(Unreleased)(2001)(Similis)[GBC].7z" download>download</a>
 			</span>
 
 		<h2 id="this-site">this site!</h2>
@@ -149,7 +151,8 @@
 			<u id="ref3" class="title" title="accessibility">
 			a11y<a href="#note3">(3)</a></u>
 			some of them became text and footnotes, some still remains :3
-			<br><a href="/" target="_blank">open</a>
+			<br><a href="/">page</a>
+			<a href="https://github.com/zlago/zlago.github.io/">github</a>
 		</span>
 
 		<hr><span class="footnotes">
