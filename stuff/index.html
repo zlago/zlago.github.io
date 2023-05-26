@@ -30,6 +30,9 @@
 			div.screenshot > img {
 				zoom: 100%;
 			}
+			#logo:target {
+				background-color: #fff2
+			}
 		</style>
 </head>
 <body onload="fixZero()">
@@ -115,10 +118,16 @@
 				<u id="ref2" class="title" title="display the on-cart logo if its custom, bootrom logo otherwise">
 				whether to display the bootrom logo or the cart logo
 				<a href="#note2">(2)</a></u><br>
-				if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.
+				<span id="logo">if you want to replace the logo in the bootrom, its at 0x41, and the cat is at 0x71.<span>
 				<br><a href="/res/dmg.bin" download>binary</a>
 			</span>
 		</div>
+
+		<h2 id="gblc">gblc</h2>
+		<span>
+			converts 1bpp into game boy logo format, not much else i can say 
+			<br><a href="/tools/gblc.html">main page</a>
+		</span>
 
 		<h2 id="katakis-3d-gbs-rip">katakis 3d GBS rip</h2>
 			<span>

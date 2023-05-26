@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>logo converter</title>
+	<meta name="viewport" content="width=device-width initial-scale=1">
+	<link rel="stylesheet" href="/stylesheet.css">
+	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
+	<script type="text/javascript" src="/res/theme.js"></script>
+	<link rel="icon" type="image/x-icon" href="/favi.png">
+		<!-- for embeds -->
+		<meta property="og:title" content="gbl converter">
+		<meta property="og:description" content="1bpp to game boy logo converter">
+		<!-- embed color (discord) -->
+		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
+		<style type="text/css">
+			#dropbox {
+				margin: 10px 5px;
+				border: 2px;
+				border-style: dashed;
+				min-width: 100px;
+				min-height: 100px;
+				display: grid;
+				align-items: center;
+				justify-content: center;
+			}
+		</style>
+</head>
+<body>
+	<header>
+		<iframe class="header" src="/header.html"></iframe>
+	</header>
+	<div class="main">
+		<h2 style="margin: auto;">game boy logo converter</h2>
+		convert 48 byte 1bpp into game boy logo format<br>
+		requires js<hr>
+		<input type="file" id="fileinput" accept=".1bpp,">
+		<div id="dropbox">dropbox currently unimplemented</div>
+		<script type="text/javascript" src="gblc.js"></script>
+		<hr><div class="blackbox">
+			how to use:<ol>
+				<li>draw a logo (48x8, black and white)</li>
+				<li>run <pre>$ rgbgfx -d 1 -o logo.1bpp logo.png</pre></li>
+				<li>upload file here to reorder the tile data from 1bpp to gbl</li>
+				<li>do whatever you want with the file <a href="/stuff/#logo">(for example)</a></li>
+			</ol>
+		</div>
+	</div>
+</body>
+</html>
