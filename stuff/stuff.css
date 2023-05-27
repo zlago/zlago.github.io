@@ -1,0 +1,30 @@
+h2 {
+	text-align: center;
+}
+.project {
+	display: grid;
+	grid-auto-flow: row;
+	grid-gap: 15px;
+}
+div.screenshot {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-self: center;
+	gap: 0px;
+}
+@media only screen and (min-width: 600px) {
+	div.project {
+		display: inline-grid;
+		grid-auto-flow: column;
+	}
+	div.screenshot {
+		width: min-content;
+	}
+}
+div.screenshot > img {
+	zoom: 100%;
+}
+#logo:target {
+	background-color: #fff2
+}

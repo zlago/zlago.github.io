@@ -4,37 +4,52 @@ let dropbox = document.getElementById("dropbox");
 
 dropbox.addEventListener("dragenter", drag, false);
 dropbox.addEventListener("dragover", drag, false);
-// dropbox.addEventListener("drop", drop, false);
-fileInput.addEventListener("change", deserialiseData, false);
+dropbox.addEventListener("drop", dropProcess, false);
+fileInput.addEventListener("input", fileProcess, false);
 
 function drag(e) {
   e.stopPropagation();
   e.preventDefault();
 }
 
-function drop(e) {
+function dropProcess(e) {
 	drag(e);
-
+	new DataTransfer()
 	const dt = e.dataTransfer;
 	const files = dt.files;
-	deserialiseData(files);
+	for (let i = 0; i < files.length; i++) {
+		deserialiseData(files[i]);
+	}
 }
 
-function deserialiseData() {
-	const selectedFile = this.files[0]; // fetch the first uploaded file
-	if (selectedFile.size == 48) {
-		let filename = stripExtension(selectedFile.name)
+function fileProcess(e) {
+	for (let i = 0; i < this.files.length; i++) {
+	deserialiseData(this.files[i]);
+	}
+}
+
+// probably should figure out how to better handle this, to make it reusable for other converters (if any)
+function deserialiseData(inputFile) {
+	if (inputFile.size < 48) {
+		// fail if too small
+		alert("file too small (" + inputFile.size + " < 48)");
+	} else {
+		if (inputFile.size > 48) {
+			// let the user convert if too big
+			if (!confirm("file too big (" + inputFile.size + " > 48, OK to truncate and convert anyways)")) {return}
+		}
+		let filename = stripExtension(inputFile.name)
 		const reader = new FileReader();
 		reader.onload = (e) => {
-			// put the contents of the file in the fileData array buffer
-			const buffer = new Uint8Array(e.target.result);
+			// put the contents of the file in the inputData array buffer
+			const buffer = new Uint8Array(e.target.result, 0, 48); // apparently you NEED two lines
 			const inputArray = Uint8Array.from(buffer);
+			// convert
 			let outputArray = convertData(inputArray);
+			// and then download as filename.gbl
 			serialiseData(outputArray, filename + ".gbl");
 		};
-		reader.readAsArrayBuffer(selectedFile);
-	} else {
-		alert("invalid input size (" + selectedFile.size + " != 48)");
+		reader.readAsArrayBuffer(inputFile);
 	}
 }
 
