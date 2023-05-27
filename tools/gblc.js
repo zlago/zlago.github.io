@@ -53,15 +53,36 @@ function deserialiseData(inputFile) {
 	}
 }
 
+//    gbl   |  1bpp
+//
+//   halftile layout
+// 01234567 | 02468ace
+// 89abcdef | 13579bdf
+//
+//        halftile format
+// where in the half-tile the nibble goes (X,Y)
+// /------\        /------\
+// 0,0; 0,1 : 04 | 0,0; 1,0 : 01
+// 0,2; 0,3 : 15 | 0,1; 1,1 : 23
+// 1,0; 1,1 : 26 | 0,2; 1,2 : 45
+// 1,2; 1,3 : 37 | 0,3; 1,3 : 67
+//            \/              \/
+// which nibble each half-sliver shows
 function convertData(inArray) {
 	let outArray = new Uint8Array(48);
+	let outOffs
+	let inOffs
+	// gbl is split into the top half and the bottom half
 	for (let half = 0; half < 2; half++) {
+		// which are further split into halftiles
 		for (let tile = 0; tile < 6; tile++) {
-			// i dont know how this works i just trial and errord it
-			outArray[half * 24 + tile * 4 + 0] = (inArray[half * 4 + tile * 8 + 0] & 0xf0) | ((inArray[half * 4 + tile * 8 + 1] >> 4) & 0x0f);
-			outArray[half * 24 + tile * 4 + 1] = (inArray[half * 4 + tile * 8 + 2] & 0xf0) | ((inArray[half * 4 + tile * 8 + 3] >> 4) & 0x0f);
-			outArray[half * 24 + tile * 4 + 2] = ((inArray[half * 4 + tile * 8 + 0] << 4) & 0xf0) | (inArray[half * 4 + tile * 8 + 1] & 0x0f);
-			outArray[half * 24 + tile * 4 + 3] = ((inArray[half * 4 + tile * 8 + 2] << 4) & 0xf0) | (inArray[half * 4 + tile * 8 + 3] & 0x0f);
+			outOffs = half * 24 + tile * 4
+			inOffs = half * 4 + tile * 8
+			// process a half-tile
+			outArray[outOffs + 0] = (inArray[inOffs + 0] & 0xf0) | ((inArray[inOffs + 1] >> 4) & 0x0f);
+			outArray[outOffs + 1] = (inArray[inOffs + 2] & 0xf0) | ((inArray[inOffs + 3] >> 4) & 0x0f);
+			outArray[outOffs + 2] = ((inArray[inOffs + 0] << 4) & 0xf0) | (inArray[inOffs + 1] & 0x0f);
+			outArray[outOffs + 3] = ((inArray[inOffs + 2] << 4) & 0xf0) | (inArray[inOffs + 3] & 0x0f);
 		}
 	}
 	return outArray;

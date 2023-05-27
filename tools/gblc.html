@@ -23,6 +23,10 @@
 				display: grid;
 				align-items: center;
 				justify-content: center;
+				background: url(bars.png);
+			}
+			span:target {
+				background-color: #fff2
 			}
 		</style>
 </head>
@@ -32,7 +36,7 @@
 	</header>
 	<div class="main">
 		<h2 style="margin: auto;">game boy logo converter</h2>
-		convert 48 byte 1bpp into game boy logo format<br>
+		converts 48 byte tiled 1bpp into gbl format<br>
 		requires js<hr>
 		<input type="file" id="fileinput" accept=".1bpp,.chr" multiple>
 		<div id="dropbox">drop 1bpps here</div>
@@ -59,6 +63,38 @@
 				<li>do whatever you want with the file <a href="/stuff/#logo">(for example)</a></li>
 			</ol>
 		</div>
+		<hr><center>
+			<h2>what is gbl?</h2>
+		</center>
+			the game boy logo format is the format used by the game boy for displaying its company logo<br>
+			its a weird format and its <span id="ref1">near-useless<a href="#note1">(1)</a></span> as the console will lock up if the logo on the cart is
+			<span id="ref2">"incorrect"<a href="#note2">(2)</a></span>.<br>
+			i only know about <a href="http://catskull.net/GB-Logo-Generator/">one other tool</a> for this and i sort-of wanted something that could be somewhat automatable
+		<hr><span class="footnotes">
+			footnotes
+			<p id="note1"><a href="#ref1">(1)</a>
+				there exist bootrom alternatives (eg. <a href="/stuff/index.html#custom-dmg-bootrom">mine</a>) that dont check the logo.<br>you can only use them im emulators (yes,
+				<u style="text-decoration-style: double;">fpga <b>is</b> emulation</u> now shut the),<br>
+				but maybe one day someone will harmlessly rip a gb apart and replace the ROM chip
+			</p>
+			<p id="note2"><a href="#ref2">(2)</a>
+				the exact details depend on the model:<ul>
+					<li>
+						DMG - the logo is first read and loaded into VRAM, then read again and
+						compared with a copy on the bootrom,<br>if the two dont match, the console
+						locks up. note that the logo is read twice, meaning it could in theory change
+					</li>
+					<li>
+						CGB - same as DMG, except only half of the bytes are checked, this means<br>
+						you can modify the bottom half of the logo and the console wont lock up
+					</li>
+					<li>
+						AGB - the logo is read and loaded into VRAM, then checked without re-reading<br>
+						from the cartridge, fixing the TOCtTOU. but like CGB, only the top half is checked
+					</li>
+				</ul>
+			</p>
+		</span>
 	</div>
 	<script type="text/javascript" src="gblc.js"></script>
 </body>
