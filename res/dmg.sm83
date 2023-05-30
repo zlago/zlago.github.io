@@ -1,0 +1,217 @@
+; $ rgbgfx -d 1 -c "#fff, #000, #00f, #0ff" -o logo.1bpp b&w_56x8.png
+; convert logo.1bpp to logo.gbl using https://zlago.github.io/tools/gblc.html
+; $ rgbasm -h -Wall -i path/to/hardware.inc -o dmg.o dmg.sm83
+; $ rgblink -x -p 0xFF -o dmg.bin dmg.o
+
+def MAX_SIZE equ $100
+
+; uncomment this to free up 18 bytes
+;def NO_LOGO_CHECK
+
+macro lb ; "load bytes", ld for two n8 to one r16
+	ld \1, (low(\2) << 8) | low(\3)
+endm
+
+macro rom_sect ; define a rom section and check where its placed
+    section \#
+    assert startof(\1) + sizeof(\1) <= MAX_SIZE
+endm
+
+macro note
+	assert _NARG == 2
+	dw \1 | 1 << 15
+	db \2
+	endm
+
+INCLUDE "hardware.inc"
+
+; i assume B -> bytes is bothering at least someone,
+; but its easier to ctrl+f it this way
+
+; total: 252Bytes / 256Bytes, 1Bytes free
+
+ rom_sect "vblank", rom0[$40] ; 1Bytes
+	reti
+
+ rom_sect "notelut", rom0 ; 12Bytes / 27Bytes
+NoteLut: ; startup jingle
+	; each note is 3 bytes
+	note 1797, 5 - 1 ; C-5
+	note 1811, 1     ; C#5
+	note 1824, 5     ; D-5
+	note 1860, 50 - 3; F-5*/
+	.end
+
+ rom_sect "logo", rom0 ; 56Bytes
+Logo:
+	incbin "logo.gbl"
+Icon:
+	incbin "logo.1bpp", 48, 8
+	.end
+
+ rom_sect "init", rom0[$000] ; 64Bytes
+Init:: ; execution starts here ; 6Bytes
+	ld sp, $fffe
+	xor a
+	ldh [rSCX], a ; it just bothered me and i got no better use for the 2 free bytes
+	; clear VRAM ; 8Bytes
+		ld hl, _VRAM
+		.clearVram
+		ld [hl+], a
+		bit 5, h
+		jr z, .clearVram
+	; checksum logo (custom logos will overwrite my logo ^^) ; 18Bytes
+		if !def(NO_LOGO_CHECK)
+			ld hl, $0134
+			ld b, $0134 - $0104
+			; relies on A = 0
+			.checkLogo
+			dec hl
+			add a, [hl]
+			dec b
+			jr nz, .checkLogo
+			cp $46 ; adding the N logo nets you $46
+			jr nz, .CustomLogo;*/
+			endc
+		ld hl, Logo
+		.CustomLogo
+	; unpack logo ; 30Bytes
+		; logo format appears to be.. every nibble gets widened into a sliver and copied twice.. if you can sue someone over that i quit
+		ld de, _VRAM + $10
+		ld b, 12 * 2 * 2 ; 24 tiles, 2 bytes / tile
+		.byte
+			ld c, [hl]
+			inc hl
+			.nibble
+				ld a, 1
+				.bit ; shift the same bit into a twice
+					; i tried to shrink this a bit more but this is as small as it gets
+					; bits 7654 3210, carry
+					rl c ; 7654_3210, c -> 6543_210c, 7
+					rla  ; xxxx_xxyz, 7 -> xxxx_xyz7, x
+					rrca ; xxxx_xyz7, 7 -> 7xxx_xxyz, 7
+					rla  ; 7xxx_xxyz, 7 -> xxxx_xyz7, 7
+					rla  ; xxxx_xyz7, 7 -> xxxx_yz77, x
+					jr nc, .bit
+				; write
+					ld [de], a
+					inc e
+					inc e
+					ld [de], a
+					inc e
+					inc de
+				bit 2, e
+				jr nz, .nibble
+			dec b
+			jr nz, .byte
+	; 2Bytes
+		jr Main
+	.end
+
+ rom_sect "main", rom0 ; 120Bytes
+Main:
+	; copycat ; 9Bytes
+		if !def(NO_LOGO_CHECK)
+			ld hl, Icon
+			endc
+		ld b, 8
+		.cat
+			ld a, [hl+]
+			ld [de], a
+			inc e
+			inc e
+			dec b
+			jr nz, .cat
+	; map ; 21Bytes
+		ld hl, _SCRN0 + 8 * SCRN_VX_B + 4
+		xor a
+		lb de, 2, $19
+		.map
+			ld b, 12
+			.mapLoop
+				inc a
+				ld [hl+], a
+				dec b
+				jr nz, .mapLoop
+			ld [hl], e
+			ld e, b
+			ld l, low(_SCRN0 + 9 * SCRN_VX_B + 4)
+			dec d
+			jr nz, .map
+	; init lcdc ; 4Bytes
+		ld a, LCDCF_ON | LCDCF_BLK01 | LCDCF_BGON
+		ldh [rLCDC], a
+	; play a few notes
+		; enable interrupts ; 5Bytes
+			ld a, IEF_VBLANK
+			ldh [rIE], a
+			ei
+		; scroll/fade ; 23Bytes
+			; 1st
+				halt
+				ld a, %00_00_01_00
+				ldh [rBGP], a
+				ldh [rSCY], a
+			; 2nd
+				halt
+				add a
+				ldh [rBGP], a
+				ld a, 2
+				ldh [rSCY], a
+			; 3rd
+				halt
+				xor a
+				ldh [rSCY], a
+				ld a, %11_11_11_00
+				ldh [rBGP], a
+		; init pulse ; 15Bytes
+			ld a, $77 << 1
+			ldh [rAUDENA], a
+				assert ($77 << 1) & AUDENA_ON == AUDENA_ON
+			ldh [rAUD1LEN], a
+				assert ($77 << 1) & %11000000 == AUDLEN_DUTY_75
+			rra
+			ldh [rAUDTERM], a
+			ldh [rAUDVOL], a
+			ld a, $f3
+			ldh [rAUD1ENV], a
+		; play notes 19Bytes
+			ld hl, NoteLut
+			ld b, (NoteLut.end - NoteLut) / 3
+			.loop1
+				ld a, [hl+]
+				ldh [rAUD1LOW], a
+				ld a, [hl+]
+				ldh [rAUD1HIGH], a
+				ld a, [hl+]
+				.loop2
+					halt
+					dec a
+					jr nz, .loop2
+				dec b
+				jr nz, .loop1
+		; disable interrupts ; 1Bytes
+			di
+	; validate header ; 15Bytes
+		ld a, $e7 ; i dont know why but a needs to be $e7
+		ld hl, $0134
+		ld b, $014d - $0134
+		.header
+		sub a, [hl] ; another crazy concept
+		inc hl
+		dec b
+		jr nz, .header
+		sub [hl]
+		jr nz, @
+			assert $0134 + ($014d - $0134) == $014d
+	; set registers ; 8Bytes
+		; hl is already $014d after header validation
+		; b is already 0 after header validation
+		; a is already 0 after header validation
+		ld c, $13
+		ld de, $00d8
+		inc a
+		ldh [$ff50], a
+	.end
+		align 8 ; should place it at the right place
+		assert @ == $100

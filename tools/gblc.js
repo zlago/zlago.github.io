@@ -8,13 +8,13 @@ dropbox.addEventListener("drop", dropProcess, false);
 fileInput.addEventListener("input", fileProcess, false);
 
 function drag(e) {
-  e.stopPropagation();
-  e.preventDefault();
+	e.stopPropagation();
+	e.preventDefault();
 }
 
 function dropProcess(e) {
 	drag(e);
-	new DataTransfer()
+	new DataTransfer();
 	const dt = e.dataTransfer;
 	const files = dt.files;
 	for (let i = 0; i < files.length; i++) {
@@ -36,9 +36,9 @@ function deserialiseData(inputFile) {
 	} else {
 		if (inputFile.size > 48) {
 			// let the user convert if too big
-			if (!confirm("file too big (" + inputFile.size + " > 48, OK to truncate and convert anyways)")) {return}
+			if (!confirm("file too big (" + inputFile.size + " > 48, OK to truncate and convert anyways)")) {return;}
 		}
-		let filename = stripExtension(inputFile.name)
+		let filename = stripExtension(inputFile.name);
 		const reader = new FileReader();
 		reader.onload = (e) => {
 			// put the contents of the file in the inputData array buffer
@@ -70,8 +70,8 @@ function deserialiseData(inputFile) {
 // which nibble each half-sliver shows
 function convertData(inArray) {
 	let outArray = new Uint8Array(48);
-	let outOffs
-	let inOffs
+	let outOffs;
+	let inOffs;
 	// gbl is split into the top half and the bottom half
 	for (let half = 0; half < 2; half++) {
 		// which are further split into halftiles
@@ -90,8 +90,8 @@ function convertData(inArray) {
 
 function serialiseData(inArray, outfile) {
 	// totally not stolen from stackoverflow
-	var blob = new Blob([inArray]);
-	var link = document.createElement('a');
+	let blob = new Blob([inArray]);
+	let link = document.createElement("a");
 	link.href = window.URL.createObjectURL(blob);
 	link.download = outfile;
 	link.click();
