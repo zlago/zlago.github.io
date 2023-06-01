@@ -33,9 +33,9 @@ function drag(e) {
 */
 
 /*     palette------------------------->o.palette->OUT.PAL
-      /                                / ^^^^^^^ \
+      /                                /         \
 IN.BMP->pixels->tiles->b.tiles->u.tiles---------->o.p.tiles->b.p.tiles->4bpp->OUT.4BPP
-      \                       \                            \
+      \                       \                            \  ^^^^^^^
        header                  tilemap--------------------->b.p.tilemap->OUT.PCT
 */
 
@@ -72,39 +72,53 @@ reader.onload = (e) => {
 	if (startOfPalette == undefined) {return;}
 	// read palette
 	const paletteArray = Uint8Array.from(buffer.slice(startOfPalette, startOfPalette + 1024));
-	let startOfPixelArray = 0
+	let startOfPixelArray = 0;
 	// read pixel array
 	for (let i = 0; i < 4; i++) {
 		startOfPixelArray += headerArray[10 + i] << (i * 8)
 	}
 	const pixelArray = Uint8Array.from(buffer.slice(startOfPixelArray, startOfPixelArray + (256 * 224)));
 	// convert pixel array to tiles
-	let tileArray = pixelToTile(pixelArray);
-	let borderTileArray = new Uint8Array(removeScreenTiles(tileArray));
+	const tileArray = pixelToTile(pixelArray);
+	const borderTileArray = new Uint8Array(removeScreenTiles(tileArray));
 	// deduplicate tiles
-	let tilemapArray = new Uint16Array(borderTileArray.length / 64);
-	let uniqueTileArray = new Uint8Array(deduplicateTiles(borderTileArray, tilemapArray));
+	const tilemapArray = new Uint16Array(borderTileArray.length / 64);
+	const uniqueTileArray = new Uint8Array(deduplicateTiles(borderTileArray, tilemapArray));
 	// tally colors
-
+	const colorsArray = tallyColors(uniqueTileArray);
+	// convert that data to a more useful format
+	const colorLookupArray = sortColors(colorsArray);
+	if (colorLookupArray == undefined) {alert("too many colors!"); return;}
+	const palOutArray = convertColors(paletteArray, colorLookupArray);
 	// reorder tile colors
-
-	// tally per-tile colors
-
+	const colorTileArray = reorderTileColors(uniqueTileArray, colorLookupArray);
+	// tally per-tile colors // the names keep getting worse
+	const tileColorsArray = tallyTileColors(colorTileArray);
 	// bitpack tiles
 
 	// convert to 4bpp
-		// note: the thing is currently upside down
-		// as in, tiles and tilemaps
-
+	const tile4bppArray = convert4bpp(colorTileArray);
+	//
+	const tilemapOutArray = aaaaaaaa(tilemapArray);
 	// download
+	serialiseData(tile4bppArray, "out.4bpp");
+	serialiseData(palOutArray, "out.pal");
+	//serialiseData(tilemapOutArray, "out.pct");
 	// lets just say it was fun to debug
 	console.log(tileArray.length / 64 + " input tiles");
 	console.log(borderTileArray.length / 64 + " border tiles");
-	console.log(tilemapArray.length + " tilemap entries");
 	console.log(uniqueTileArray.length / 64 + " unique tiles");
-	console.log(tilemapArray);
 	console.log("done");
 };
+
+function aaaaaaaa/* perfect name */(inArray) {
+	let outArray = new Uint8Array(inArray.length * 2);
+	for (const i in inArray) {
+		outArray[i * 2] = inArray[i];
+		outArray[i * 2 + 1] = 0x10;
+	}
+	return outArray;
+}
 
 // find start of palette and validate the header
 function findPaletteStart(header) {
@@ -163,10 +177,10 @@ function pixelToTile(inArray) {
 	for (let tv = 0; tv < 224 / 8; tv++) {
 		for (let th = 0; th < 256 / 8; th++) {
 			// pixel
-			for (let pv = 0; pv < 8; pv++) {
-				for (let ph = 0; ph < 8; ph++) {
-					inOffs = ((tv * 8) + pv) * 256 + ((th * 8) + ph);
-					outOffs = (((tv * 32) + th) * 8 + pv) * 8 + ph;
+			for (let pv = 0, rv = 7; pv < 8; pv++, rv--) {
+				for (let ph = 0, rh = 7; ph < 8; ph++, rh--) {
+					inOffs = ((tv * 8) + rv) * 256 + ((th * 8) + rh); // dumb hack for tile orientation
+					outOffs = ((((27 - tv /* dumb hack for tilemap ordering */) * 32) + th) * 8 + pv) * 8 + ph;
 					outArray[outOffs] = inArray[inOffs];
 				}
 			}
@@ -190,7 +204,7 @@ function removeScreenTiles(inArray) {
 	// copy just the right lines
 	let inOffs = (gap + vertical) * tile;
 	let outOffs = vertical * tile;
-	for (let row = 0; row < 17 /* stupid off-by-one, i hope it goes to GC */; row++) {
+	for (let row = 0; row < 17 /* stupid off-by-one */; row++) {
 		for (i = 0; i < tile * horizontal; i++) {
 			outArray.push(inArray[inOffs + i]);
 		}
@@ -225,6 +239,104 @@ function findDuplicates(inArray, outArray) {
 	}
 	// if no matching tile found, push tile
 	return (outArray.push(...inArray) / 64) - 1;
+}
+
+function tallyColors(inArray) {
+	let colorsArray = new Array(256).fill(0);
+	for (let tile = 0; tile < inArray.length / 64; tile++) {
+		let tileColorsArray = new Array(256).fill(0);
+		// set flag for each appearing color in the tile
+		for (let i = 0; i < 64; i++) {
+			tileColorsArray[inArray[tile * 64 + i]] = 1;
+		}
+		// sum??
+		for (const i in colorsArray) {
+			colorsArray[i] += tileColorsArray[i];
+		}
+	}
+	return colorsArray;
+}
+
+function sortColors(inArray) {
+	let unsortedArray = Array.from(inArray);
+	let outArray = new Array(256).fill(0);
+	for (let i = 1; i < 16; i++) {
+		let sortedArray = Array.from(unsortedArray);
+		sortedArray.sort();
+		let ele2 = sortedArray[sortedArray.length - 1];
+		let y = unsortedArray.findIndex((ele) => {return ele == ele2;});
+		outArray[y] = i;
+		unsortedArray[y] = -1;
+	}
+	// check if more than 15 colors
+	unsortedArray.sort();
+	if (unsortedArray[unsortedArray.length - 1] > 0) {return;}
+	//
+	return outArray;
+}
+
+function convertColors(inArray, refArray) {
+	let outArray = new Uint8Array(16 * 3 * 2).fill(0);
+	// 15 col x 1
+	for (let i = 1; i < 16; i++) {
+		let pos = refArray.findIndex((ele) => {return ele == i;});
+		if (pos == -1) {break;}
+		let color = 0;
+		for (let c = 0; c <= 2; c++) {
+			color |= ((inArray[pos * 4 + c] >> 3) & 0x1f) << ((2 - c) * 5);
+		}
+		outArray[i * 2 + 0] = color >> 0;
+		outArray[i * 2 + 1] = color >> 8;
+	}
+	// 5 col x 3
+	for (let i = 0; i < 3; i++) {
+		for (let c = 0; c < 10; c++) {
+			outArray[34 + i * 10 + c] = outArray[2 + c];
+		}
+	}
+	// 3 col x 5
+	for (let i = 0; i < 5; i++) {
+		for (let c = 0; c < 6; c++) {
+			outArray[66 + i * 6 + c] = outArray[2 + c];
+		}
+	}
+	return outArray;
+}
+
+function reorderTileColors(inArray, lookupArray) {
+	let outArray = new Uint8Array(inArray);
+	for (const i in outArray) {
+		outArray[i] = lookupArray[inArray[i]];
+	}
+	return outArray;
+}
+
+function tallyTileColors(inArray) {
+	let outArray = new Uint8Array(inArray.length / 64);
+	for (const i in outArray) {
+		outArray[i] = Math.max(...inArray.slice(i * 64, (i + 1) * 64));
+	}
+	return outArray;
+}
+
+function convert4bpp(inArray) {
+	let outArray = new Uint8Array(inArray.length / 2)
+	for (let tile = 0; tile < inArray.length / 8; tile++) {
+		for (let sliver = 0; sliver < 8; sliver++) {
+			let bitplanes = new Array(4).fill(0)
+			for (const plane in bitplanes) {
+				for (let bit = 0; bit < 8; bit++) {
+				bitplanes[plane] |= ((inArray[tile * 64 + sliver * 8 + bit] >> plane) & 0b1) << bit;
+				}
+			}
+			outArray[tile * 32 + sliver * 2 +  0 + 0] = bitplanes[0];
+			outArray[tile * 32 + sliver * 2 +  0 + 1] = bitplanes[1];
+			outArray[tile * 32 + sliver * 2 + 16 + 0] = bitplanes[2];
+			outArray[tile * 32 + sliver * 2 + 16 + 1] = bitplanes[3];
+			// this has no right to work, but it seems to work
+		}
+	}
+	return outArray;
 }
 
 function serialiseData(inArray, outfile) {
