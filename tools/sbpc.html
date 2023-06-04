@@ -28,6 +28,9 @@
 			span:target {
 				background-color: #fff2
 			}
+			h2 {
+				margin: auto;
+			}
 		</style>
 </head>
 <body>
@@ -35,14 +38,15 @@
 		<iframe title="navigation bar" class="header" src="/header.html"></iframe>
 	</header>
 	<div class="main">
-		<h2 style="margin: auto;">super border (bit)packing converter</h2>
-		<u><i>NOTE: unfinished, can spit out a 4bpp and a palette</i></u><br>
-		converts 8bpp bitmaps to one-palette bitpacked super game boy borders<hr>
+		<h2>super border (bit)packing converter</h2>
+		converts 8bpp bitmaps to 15 color bitpacked super game boy borders<hr>
 		<input type="file" id="fileinput" accept=".bmp" multiple>
 		<div id="dropbox">drop bitmaps here</div>
 		<hr><div class="blackbox">
+			<b>note: the tool is currently not fully functional</b><hr>
 			how to use:<ol>
-				<li>draw a border (256x224 256 color bitmap, but dont use more than 15 colors, the middle 160x144 for the game screen is automatically removed)</li>
+				<li>draw a border (256x224 256 color bitmap, but dont use more than 15 colors.<br>
+				the middle 160x144 for the game screen is automatically removed)</li>
 				<li>upload file here to convert to 4bpp, pct and pal</li>
 				<li>do whatever you want with the output</li>
 			</ol>
@@ -50,7 +54,12 @@
 		<hr><center>
 			<h2>how is this better than superfamiconv?</h2>
 		</center>
-			for 99% of cases, its not, and i dont want to bother explaining the 1%
+		<div>
+			its only better if you have a lot of tiles that use 3 or less colors, or a mix of 5 and 3.<br>
+			additionally, colors are picked <i>after</i> tile deduplication, so if you have a lot of empty tiles,
+			they will not interfere with the bitpacking of tiles that are more fit for that<br>
+			tile flips are currently unsupported
+		</div>
 	</div>
 	<script type="text/javascript" src="sbpc.js"></script>
 </body>

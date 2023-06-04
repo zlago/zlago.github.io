@@ -60,11 +60,11 @@ let filename
 
 function deserialiseData(inputFile) {
 	filename = stripExtension(inputFile.name);
+	reader.addEventListener("load", processData);
 	reader.readAsArrayBuffer(inputFile);
 }
 
-
-reader.onload = (e) => {
+function processData(e) {
 	// read header and verify it
 	let buffer = new Uint8Array(e.target.result);
 	const headerArray = Uint8Array.from(buffer.slice(0, 54));
@@ -93,17 +93,24 @@ reader.onload = (e) => {
 	// reorder tile colors
 	const colorTileArray = reorderTileColors(uniqueTileArray, colorLookupArray);
 	// tally per-tile colors // the names keep getting worse
-	const tileColorsArray = tallyTileColors(colorTileArray);
-	// bitpack tiles
+	let tileColorsArray = tallyTileColors(colorTileArray);
+	// sort tiles?
 
-	// convert to 4bpp
+	// re-do tilemap?
+
+	// bitpack tiles?
+	//let tileRemapLookupArray = Array(colorTileArray.length / 32);
+	//const packedTileArray = new Uint8Array(bitpackTiles(colorTileArray, tileColorsArray, tileRemapLookupArray));
+	// re-do tilemap
+
+	// convert to 4bpp, insert blank tile
 	const tile4bppArray = convert4bpp(colorTileArray);
-	//
-	const tilemapOutArray = aaaaaaaa(tilemapArray);
+	// merge tilemaps, insert screen tiles
+	const tilemapOutArray = new Uint8Array(convertPct(tilemapArray));
 	// download
-	serialiseData(tile4bppArray, "out.4bpp");
-	serialiseData(palOutArray, "out.pal");
-	//serialiseData(tilemapOutArray, "out.pct");
+	serialiseData(tile4bppArray, filename + ".4bpp");
+	serialiseData(palOutArray, filename + ".pal");
+	serialiseData(tilemapOutArray, filename + ".pct");
 	// lets just say it was fun to debug
 	console.log(tileArray.length / 64 + " input tiles");
 	console.log(borderTileArray.length / 64 + " border tiles");
@@ -111,11 +118,35 @@ reader.onload = (e) => {
 	console.log("done");
 };
 
-function aaaaaaaa/* perfect name */(inArray) {
-	let outArray = new Uint8Array(inArray.length * 2);
-	for (const i in inArray) {
-		outArray[i * 2] = inArray[i];
-		outArray[i * 2 + 1] = 0x10;
+function bitpackTiles(inArray, inColorArray, remapArray) {
+	let colorArray = Array.from(inColorArray);
+	let outArray = Array.from(inArray);
+	for (const tile in remapArray) {
+		if (colorArray[tile] <= 5) {
+			let tile2 = colorArray.findLastIndex (ele) => {return ele <= 3;};
+			if tile != tile2 {
+
+			}
+		}
+	}
+	return outArray;
+}
+
+function convertPct(tilemapArray, paletteArray/*, flipArray*/) {
+	let outArray = new Array(tilemapArray.length * 2);
+	for (const i in tilemapArray) {
+		outArray[i * 2] = tilemapArray[i] + 1;
+		outArray[i * 2 + 1] = 0x10 //| (paletteArray[i] << 2);
+	}
+	// reinsert game screen tiles
+	let padding = new Array(20 * 2).fill(0)
+	for (let i = 0; i < 18; i++) {
+		outArray.splice(((5 + i) * 32 + 6) * 2, 0, ...padding)
+	}
+	// duplicate last scanline
+	for (let i = 0; i < 32; i++) {
+		outArray.push(outArray[outArray.length - 32 * 2])
+		outArray.push(outArray[outArray.length - 32 * 2] ^ 0x80)
 	}
 	return outArray;
 }
@@ -320,19 +351,20 @@ function tallyTileColors(inArray) {
 }
 
 function convert4bpp(inArray) {
-	let outArray = new Uint8Array(inArray.length / 2)
+	let outArray = new Uint8Array(inArray.length / 2 + 32).fill(0);
 	for (let tile = 0; tile < inArray.length / 8; tile++) {
 		for (let sliver = 0; sliver < 8; sliver++) {
-			let bitplanes = new Array(4).fill(0)
+			let bitplanes = new Array(4).fill(0);
 			for (const plane in bitplanes) {
 				for (let bit = 0; bit < 8; bit++) {
 				bitplanes[plane] |= ((inArray[tile * 64 + sliver * 8 + bit] >> plane) & 0b1) << bit;
 				}
 			}
-			outArray[tile * 32 + sliver * 2 +  0 + 0] = bitplanes[0];
-			outArray[tile * 32 + sliver * 2 +  0 + 1] = bitplanes[1];
-			outArray[tile * 32 + sliver * 2 + 16 + 0] = bitplanes[2];
-			outArray[tile * 32 + sliver * 2 + 16 + 1] = bitplanes[3];
+			let outOffs = 32 + tile * 32 + sliver * 2;
+			outArray[outOffs +  0 + 0] = bitplanes[0];
+			outArray[outOffs +  0 + 1] = bitplanes[1];
+			outArray[outOffs + 16 + 0] = bitplanes[2];
+			outArray[outOffs + 16 + 1] = bitplanes[3];
 			// this has no right to work, but it seems to work
 		}
 	}
