@@ -3,7 +3,7 @@ and accidentally found out i have a nice
 looking theme on itch i just copied that
 */
 a {
-	color: #e6c
+	color: #e6c;
 }
 a:hover {
 	color: #e9d;
@@ -11,8 +11,11 @@ a:hover {
 }
 body {
 	background-color: #55185b;
+	background-image: url(paw.png);
+	background-attachment: fixed;
 }
 div.main {
 	background-color: #3b183f;
+	background-image: url(paw.png);
 	color: #ccc;
 }

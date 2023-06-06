@@ -1,0 +1,21 @@
+/* happy (not) april 1st i hope no one actually finds this */
+a {
+	color: #f00;
+}
+a:hover {
+	color: #f00;
+	text-shadow: 0px 0px 5px #f00;
+}
+body {
+	background-color: #f00;
+	background-image: unset;
+}
+div.main {
+	background-color: #ff0;
+	background-image: unset;
+	color: #000;
+}
+div.blackbox {
+	background-color: #fff;
+	color: #000;
+}

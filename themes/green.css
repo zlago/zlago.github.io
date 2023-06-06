@@ -1,6 +1,6 @@
 /* just a test theme, actually */
 a {
-	color: #0f0
+	color: #0f0;
 }
 a:hover {
 	color: #7f7;
@@ -8,8 +8,10 @@ a:hover {
 }
 body {
 	background-color: #242;
+	background-image: url(leaf.png);
 }
 div.main {
 	background-color: #040;
-	color: #bfd;
+	background-image: url(leaf.png);
+	color: #bfb;
 }

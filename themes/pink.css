@@ -1,6 +1,6 @@
 /* the true way to experience the site */
 a {
-	color: #f0f
+	color: #f0f;
 }
 a:hover {
 	color: #ff7fff;
@@ -8,8 +8,10 @@ a:hover {
 }
 body {
 	background-color: #f0f;
+	background-image: unset;
 }
 div.main {
 	background-color: #606;
+	background-image: unset;
 	color: #fbf;
 }

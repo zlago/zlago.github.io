@@ -1,6 +1,6 @@
 /* thought itd look nice */
 a {
-	color: #7af
+	color: #7af;
 }
 a:hover {
 	color: #aef;
@@ -8,8 +8,11 @@ a:hover {
 }
 body {
 	background-color: #0f1269;
+	background-image: url(wave.png);
+	background-attachment: fixed;
 }
 div.main {
 	background-color: #014;
+	background-image: url(wave.png);
 	color: #cde;
 }

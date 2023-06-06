@@ -1,6 +1,6 @@
 /* the laziest */
 a {
-	color: #777
+	color: #777;
 }
 a:hover {
 	color: #888;
@@ -8,9 +8,11 @@ a:hover {
 }
 body {
 	background-color: #000;
+	background-image: unset;
 }
 div.main {
 	background-color: #222;
+	background-image: unset;
 	color: #bbb;
 }
 img {
