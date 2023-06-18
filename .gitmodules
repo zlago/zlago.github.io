@@ -1,0 +1,3 @@
+[submodule "game/soe"]
+	path = soe
+	url = git@github.com:zlago/stars-of-entropy-js.git

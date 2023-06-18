@@ -1,20 +1,12 @@
 /* the laziest */
-a {
-	color: #777;
-}
+a {color: #777;}
 a:hover {
 	color: #888;
 	text-shadow: 0px 0px 5px #777;
 }
-body {
-	background-color: #000;
-	background-image: unset;
-}
+body {background: url() #000;}
 div.main {
-	background-color: #222;
-	background-image: unset;
+	background: url() #222;
 	color: #bbb;
 }
-img {
-	mix-blend-mode: luminosity;
-}
+img {mix-blend-mode: luminosity;}

@@ -1,18 +1,11 @@
-/* thought itd look nice */
-a {
-	color: #7af;
-}
+/* chill */
+a {color: #7af;}
 a:hover {
 	color: #aef;
 	text-shadow: 0px 0px 5px #7af;
 }
-body {
-	background-color: #0f1269;
-	background-image: url(wave.png);
-	background-attachment: fixed;
-}
+body {background: url(wave.png) center left fixed #116;}
 div.main {
-	background-color: #014;
-	background-image: url(wave.png);
+	background: url(wave.png) center #014;
 	color: #cde;
 }

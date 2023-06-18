@@ -1,17 +1,11 @@
-/* just a test theme, actually */
-a {
-	color: #0f0;
-}
+/* originally a test theme */
+a {color: #0f0;}
 a:hover {
 	color: #7f7;
 	text-shadow: 0px 0px 5px #0f7;
 }
-body {
-	background-color: #242;
-	background-image: url(leaf.png);
-}
+body {background: url(leaf.png) center left local #242;}
 div.main {
-	background-color: #040;
-	background-image: url(leaf.png);
+	background: url(leaf.png) center #040;
 	color: #bfb;
 }

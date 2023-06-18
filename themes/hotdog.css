@@ -1,18 +1,12 @@
 /* happy (not) april 1st i hope no one actually finds this */
-a {
-	color: #f00;
-}
+a {color: #f00;}
 a:hover {
 	color: #f00;
-	text-shadow: 0px 0px 5px #f00;
+	text-shadow: 0px 0px 1px #f00;
 }
-body {
-	background-color: #f00;
-	background-image: unset;
-}
+body {background: url() #f00;}
 div.main {
-	background-color: #ff0;
-	background-image: unset;
+	background: url() #ff0;
 	color: #000;
 }
 div.blackbox {

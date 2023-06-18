@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>stars of entropy</title>
+	<meta name="viewport" content="width=device-width initial-scale=1">
+	<link rel="stylesheet" href="/stylesheet.css">
+	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
+	<script type="text/javascript" src="/res/theme.js"></script>
+	<link rel="icon" type="image/x-icon" href="/favi.png">
+		<!-- for embeds -->
+		<meta property="og:title" content="SoE js game">
+		<meta property="og:description" content="a weird project">
+		<!-- embed color (discord) -->
+		<meta content="#ff00ff" data-react-helmet="true" name="theme-color">
+	<style type="text/css">
+		#game {
+			width: 256px; height: 192px;
+			border: 0.3em ridge #fff;
+			transition: width 1s, height 1s;
+		}
+		@media only screen and (min-width: 560px) {
+			#game {width: 512px; height: 384px;}
+			@media (min-width: 840px) {
+				#game {width: 768px; height: 576px;}
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<iframe title="navigation bar" class="header" src="/header.html"></iframe>
+	</header>
+	<div class="main">
+		<center>
+			<iframe id="game" allow="fullscreen"
+				title="stars of entropy, a javascript game">
+				no frame support
+			</iframe>
+			<h2>stars of entropy</h2>
+			a silly javascript game cause i always wanted to do this<br>
+			...youre not supposted to be here...<br><br>
+			<div style="width: fit-content; text-align: start;">
+				controls:
+				<ul>
+					<li>left - turn left</li>
+					<li>right - turn right</li>
+					<li>a - accelerate</li>
+					<li>s - shoot</li>
+				</ul>
+			</div>
+		</center>
+	</div>
+</body>
+<script type="text/javascript" async>
+	fetch("/soe/").then((e) => hell(e, "iframe"));
+	fetch("/soe/favi.png").then((e) => hell(e, "link"));
+	function hell(e, tag) {
+		if (e.ok) {
+			// 200 or 304, load specified url
+			const list = document.getElementsByTagName(tag);
+			const element = list[list.length - 1];
+			tag == "link"? //e.url.includes("favi")?
+			element.href = e.url:
+			element.src = e.url;
+		} else {
+			// 404, throw an error
+			if (tag == "iframe") {
+				const span = document.createElement("i");
+				const iframe = document.getElementById("game");
+				const parent = iframe.parentElement;
+				span.textContent = "SoE is not responding..";
+				parent.insertBefore(span, iframe);
+				iframe.style.display = "none";
+			}
+		}
+		return e;
+	}
+</script>
+</html>

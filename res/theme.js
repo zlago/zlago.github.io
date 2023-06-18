@@ -26,7 +26,7 @@ function getCookie(cname) {
 }
 
 // set theme and save as cookie
-function setTheme(newtheme, savetheme) {
+function setTheme(newtheme, savetheme = true) {
 	if (savetheme != false) {
 		setCookie("theme", newtheme, 690);
 	}
