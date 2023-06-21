@@ -4,7 +4,7 @@ h2 {
 .project {
 	display: grid;
 	grid-auto-flow: row;
-	grid-gap: 15px;
+	grid-gap: 1em;
 }
 div.screenshot {
 	display: flex;
@@ -25,6 +25,11 @@ div.screenshot {
 div.screenshot > img {
 	zoom: 100%;
 }
+/*@media only screen and (min-width: 800px) {
+	div.screenshot:hover > img {
+		zoom: 200%;
+	}
+}*/
 #logo:target {
-	background-color: #fff2
+	background: #fff2
 }

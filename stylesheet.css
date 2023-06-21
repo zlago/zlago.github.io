@@ -30,7 +30,7 @@ div.blackbox {
 	margin: 0.75em 0;
 	padding: 0.75em;
 	max-width: fit-content;
-	background-color: #000;
+	background: #000;
 	color: #fff;
 }
 ul, ol {
@@ -46,6 +46,7 @@ img {
 u.title {
     text-decoration-style: dotted;
     text-decoration-thickness: 1px;
+    position: relative;
 }
 i.flavor {
 	text-align: center;
@@ -56,5 +57,7 @@ i.flavor {
 	margin: 0px;
 }
 .footnotes > p:target {
-	background-color: #fff2
+	background: #fff2
 }
+a {transition: all 0.5s;}
+a:hover {transition-duration: 0.1s;}
