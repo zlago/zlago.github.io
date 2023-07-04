@@ -7,7 +7,8 @@
 	<link rel="stylesheet" href="/stylesheet.css">
 	<link id="theme" rel="stylesheet"> <!-- for changing themes -->
 	<script type="text/javascript" src="/res/theme.js"></script>
-	<link rel="icon" type="image/x-icon" href="/favi.png">
+	<link rel="icon" type="image/x-icon" href="/soe/favicon.svg">
+	<link rel="icon" type="image/x-icon" href="/favi.png"> <!-- fallback -->
 		<!-- for embeds -->
 		<meta property="og:title" content="SoE js game">
 		<meta property="og:description" content="a weird project">
@@ -35,7 +36,7 @@
 		<center>
 			<iframe id="game" allow="fullscreen"
 				title="stars of entropy, a javascript game">
-				no frame support
+				no iframe support
 			</iframe>
 			<h2>stars of entropy</h2>
 			a silly javascript game cause i always wanted to do this<br>
@@ -47,34 +48,29 @@
 					<li>right - turn right</li>
 					<li>a - accelerate</li>
 					<li>s - shoot</li>
+					<li>d - turn slower</li>
 				</ul>
 			</div>
 		</center>
 	</div>
 </body>
-<script type="text/javascript" async>
-	fetch("/soe/").then((e) => hell(e, "iframe"));
-	fetch("/soe/favi.png").then((e) => hell(e, "link"));
-	function hell(e, tag) {
+<script type="text/javascript">
+	fetch("/soe/").then((e) => {
 		if (e.ok) {
 			// 200 or 304, load specified url
-			const list = document.getElementsByTagName(tag);
+			const list = document.getElementsByTagName("iframe");
 			const element = list[list.length - 1];
-			tag == "link"? //e.url.includes("favi")?
-			element.href = e.url:
 			element.src = e.url;
 		} else {
 			// 404, throw an error
-			if (tag == "iframe") {
-				const span = document.createElement("i");
-				const iframe = document.getElementById("game");
-				const parent = iframe.parentElement;
-				span.textContent = "SoE is not responding..";
-				parent.insertBefore(span, iframe);
-				iframe.style.display = "none";
-			}
+			const span = document.createElement("i");
+			const iframe = document.getElementById("game");
+			const parent = iframe.parentElement;
+			span.textContent = "SoE is not responding..";
+			parent.insertBefore(span, iframe);
+			iframe.style.display = "none";
 		}
 		return e;
-	}
+	});
 </script>
 </html>
