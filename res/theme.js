@@ -2,6 +2,8 @@
 // least invasive way to test cookies i could find
 // having to push to test cookies, what a concept
 
+"use strict";
+
 // cookie functions
 function setCookie(cname, cvalue, exdays) {
 	const d = new Date();
@@ -41,7 +43,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 //////////////////////////////////
 
-theme = params.theme // load theme from query string, if any
+let theme = params.theme // load theme from query string, if any
 if (theme != null) {
 	setTheme(theme, false)
 } else { // load from cookie (if any) otherwise
